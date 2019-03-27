@@ -9,10 +9,15 @@ import (
 )
 
 func main() {
-	router := mux.NewRouter()
+	router := mux.NewRouter() //make new multiplexer
 	router.HandleFunc("/healthcheck", healthCheck).Methods("GET")
+	// same as http.HandleFunc(), pattern and handler function passed
+	// as argument. if request match the path, handler function called
+	// and passing (http.ResponseWriter, *http.Request) as argument to
+	//handler function.
+	// matches request with HTTP get method
 
-	fmt.Println("Running server!")
+	fmt.Println("Running server!") //write onto the terminal
 	log.Fatal(http.ListenAndServe(":3000", router))
 
 }
