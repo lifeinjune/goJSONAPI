@@ -1,3 +1,9 @@
 Tools used on this project
 * dep : for dependency
 * gorilla/mux : handling API request and routing them and it help with easy to understand URL
+
+* dep init:
+    will create following:
+        * vendor.dep: direcotry store source code files of our dependencies
+        * Gopkg.json: dep document all API dependencies and the version our projects require
+        * Gopkg.toml: stores hand-editted option for dep

@@ -1,0 +1,54 @@
+understand serveMux (type struct)
+
+- Same as mux, matches URL of each request against list of registered
+patterns and calls the handler for the closely matches URL
+- Patterns name fixed, rooted paths(/favicon.ico), or rooted subtree (/image/)
+- Longer pattern's handler will be called first over shorter pattern
+e.g) /images/thumbnails/ will be first over /images/
+- "/" matches all paths not matched by other registered patterns
+- subtree registered with trailing slash but receive request without
+trailing slash, ServeMux redirect request to subtree root unless,
+separate registration for the path without trailiing slash
+e.g) registering /images/ cause ServeMux to redirect  request for /images
+to /images/ unless register for /images/
+- Pattern may optionally begin with host name that restrict matches to 
+specific host only.
+- Host-specific patterns comes first over general patterns
+e.g) pattern like "/codesearch" and "codeSearch.google.com/" will not
+interup request for "http//www.google.com/"
+- ServeMux sanitizing the URL request path, host header, stripping port
+number and redirecting any request containing (.) or (..) or 
+repeated slashes to an equivalent CLEANER URL !!
+-make mux -> assign pattern with handler -> request match with Handler
+
+
+functions related to ServeMux
+* func NewServeMux() *ServeMux
+    Create new ServeMux and return pointer of the ServeMux
+
+* func (mux *ServeMux) Handle(pattern string, handler Handler)
+    register the handler with pattern.
+    if handler exist for pattern, handler panics
+    Handler is interface so new struct need to be implement the 
+    Handler interface to be Handler group to use function with Handler
+    
+* func (mux *ServeMux) HandlFunc(pattern string, handler func(ResponseWriter, *Request))
+    Pretty much same as Handle function but function literal passed 
+    as argument not Handler interface (replace Handler interface to function literal)
+
+* func (*ServeMux) Handler (r *Request) (h Handler, pattern string)
+    * Handler function returns handler interface for given request
+    by consulting r.Method, r.Host, and r.Host and r.URL.Path.
+    * it will return non-nil handler.
+    * If path not in canonical form, handler internally generated handler
+        to redirect to canonical path
+    * host with port, port is ignored when matching handlers
+    * path and host reused unchanged for CONNECT requests
+    * also return pattern that matched the request orinternally-generated
+    redirects, the that will match after redirect
+    * if no registered handler to request, returns "page not found"
+    handler and empty pattern
+
+* func (mux *ServeMux) ServeHTTP(w ResponseWriter, r *Request)
+    * dispatches the request to handler closely matcches to URL
+

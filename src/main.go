@@ -1,11 +1,11 @@
 package main
 
 import (
-	"encoding/json"
-	"fmt"
-	"github.com/gorilla/mux"
-	"log"
-	"net/http"
+	"encoding/json"          //to create json response
+	"fmt"                    //to use Println
+	"github.com/gorilla/mux" //router
+	"log"                    //log server exit
+	"net/http"               //http package
 )
 
 func main() {

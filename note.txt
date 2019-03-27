@@ -1,0 +1,4 @@
+note for the project that things that i found along with project
+1. build an Endpoint
+    API endpoint is one end of the communication channle to another system.
+    For API, endpoint can include URL of server or service
