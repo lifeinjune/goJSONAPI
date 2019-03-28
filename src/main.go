@@ -23,10 +23,14 @@ func main() {
 	// in this case helthCheck meet the requirment as argument
 
 	headerOk := handlers.AllowedHeaders([]string{"Authorization"})
+	// allow Authorization header
 	originsOk := handlers.AllowedOrigins([]string{"*"})
+	// allow any domain
 	methodsOk := handlers.AllowedMethods([]string{"GET","POST","OPTIONS"})
+	// allow GET, POST and OPTION methods
 
 	fmt.Println("Running server!") //write onto the terminal
+	//handlers.CORS applies CORS to router
 	log.Fatal(http.ListenAndServe(":3000", handlers.CORS(originsOk, headersOk, methodsOk)(router))
 	//http.ListenAndServe(addr string, handler Handler) error
 	/*'
