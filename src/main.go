@@ -34,6 +34,8 @@ func main() {
 }
 
 func healthCheck(w http.ResponseWriter, r *http.Request) {
+	//http.ResponseWriter used to respond to the client
+	//http.Request give the information about request
 	json.NewEncoder(w).Encode("still alive")
 	//json.NewEncoder returns encoder pointer writes to w
 	// this case writer is http.ResponseWriter
