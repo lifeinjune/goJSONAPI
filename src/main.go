@@ -11,8 +11,8 @@ import (
 func main() {
 	router := mux.NewRouter() //make new multiplexer
 	router.HandleFunc("/healthcheck", healthCheck).Methods("GET")
-	router.HandleFunc("/message", handleQryMessage).Methods("GET")
-	router.HandleFunc("/m/{msg}", handleURLMessage).Methods("GET")
+	router.HandleFunc("/message", handleQryMessage).Methods("GET") //match pattern with handler
+	router.HandleFunc("/m/{msg}", handleURLMessage).Methods("GET") // take path parameters (/m/{msg})
 	// same as http.HandleFunc(), pattern and handler function passed
 	// as argument. if request match the path, handler function called
 	// and passing (http.ResponseWriter, *http.Request) as argument to
@@ -36,17 +36,19 @@ func main() {
 }
 
 func handleQryMessage(w http.ResponseWriter, r *http.Request) {
-	vars := r.URL.Query()
-	message := vars.Get("msg")
+	vars := r.URL.Query()      //returns value of URL query (url? after values)
+	message := vars.Get("msg") //returns first value of the key this case "msg"
 
 	json.NewEncoder(w).Encode(map[string]string{"message": message})
+	//respond client with json format of map
 }
 
 func handleURLMessage(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	message := vars["msg"]
+	vars := mux.Vars(r)    //returns pattern(route) variable this case {msg:(request variable after/m/)}
+	message := vars["msg"] //put value of msg to variable message
 
 	json.NewEncoder(w).Encode(map[string]string{"message": message})
+	//respons back to client json format of map which is object
 }
 
 func healthCheck(w http.ResponseWriter, r *http.Request) {
