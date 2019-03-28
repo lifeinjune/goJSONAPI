@@ -11,6 +11,8 @@ import (
 func main() {
 	router := mux.NewRouter() //make new multiplexer
 	router.HandleFunc("/healthcheck", healthCheck).Methods("GET")
+	router.HandleFunc("/message", handleQryMessage).Methods("GET")
+	router.HandleFunc("/m/{msg}", handleURLMessage).Methods("GET")
 	// same as http.HandleFunc(), pattern and handler function passed
 	// as argument. if request match the path, handler function called
 	// and passing (http.ResponseWriter, *http.Request) as argument to
@@ -31,6 +33,20 @@ func main() {
 	*/
 	// Fatal same as Print() follow by os.Exit(1)
 
+}
+
+func handleQryMessage(w http.ResponseWriter, r *http.Request) {
+	vars := r.URL.Query()
+	message := vars.Get("msg")
+
+	json.NewEncoder(w).Encode(map[string]string{"message": message})
+}
+
+func handleURLMessage(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	message := vars["msg"]
+
+	json.NewEncoder(w).Encode(map[string]string{"message": message})
 }
 
 func healthCheck(w http.ResponseWriter, r *http.Request) {
