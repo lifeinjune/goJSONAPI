@@ -8,4 +8,7 @@ note for the project that things that i found along with project
     directory
     * So when build the project these dependencies will be compile
     into binary no external requirement need to run the compiled code
-    
+3. run the code~!
+    basic request /healthcheck matched with healthCheck Handler
+    and returns json format data back to client
+
