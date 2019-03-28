@@ -6,6 +6,7 @@ import (
 	"github.com/gorilla/mux" //router
 	"log"                    //log server exit
 	"net/http"               //http package
+	"github.com/gorilla/handlers"
 )
 
 func main() {
@@ -21,8 +22,12 @@ func main() {
 	// HandleFunc receives handler func(w http.ResponseWriter, req *http.request)
 	// in this case helthCheck meet the requirment as argument
 
+	headerOk := handlers.AllowedHeaders([]string{"Authorization"})
+	originsOk := handlers.AllowedOrigins([]string{"*"})
+	methodsOk := handlers.AllowedMethods([]string{"GET","POST","OPTIONS"})
+
 	fmt.Println("Running server!") //write onto the terminal
-	log.Fatal(http.ListenAndServe(":3000", router))
+	log.Fatal(http.ListenAndServe(":3000", handlers.CORS(originsOk, headersOk, methodsOk)(router))
 	//http.ListenAndServe(addr string, handler Handler) error
 	/*'
 	listens on TCP network address "addr" and call Serve with
