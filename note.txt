@@ -11,4 +11,9 @@ note for the project that things that i found along with project
 3. run the code~!
     basic request /healthcheck matched with healthCheck Handler
     and returns json format data back to client
+4. Setting CORS
+    what is CORS?
+        cross-origin resource sharing. with CORS server can
+        specify who can access the asset and which HTTP
+        request method are allowed from external resources
 
