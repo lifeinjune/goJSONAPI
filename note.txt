@@ -1,4 +1,11 @@
 note for the project that things that i found along with project
 1. build an Endpoint
-    API endpoint is one end of the communication channle to another system.
-    For API, endpoint can include URL of server or service
+    * API endpoint is one end of the communication channle to another system.
+    * For API, endpoint can include URL of server or service
+2. Downlaod dependencies
+    * dep ensure command used to add dependecies on Gopkg.lock file
+    and download source code for thos dependencies to vendor/github.com/gorilla
+    directory
+    * So when build the project these dependencies will be compile
+    into binary no external requirement need to run the compiled code
+    
