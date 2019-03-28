@@ -1,12 +1,12 @@
 package main
 
 import (
-	"encoding/json"          //encoding and decoding of json
-	"fmt"                    //to use Println
+	"encoding/json" //encoding and decoding of json
+	"fmt"           //to use Println
+	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux" //router
 	"log"                    //log server exit
 	"net/http"               //http package
-	"github.com/gorilla/handlers"
 )
 
 func main() {
@@ -22,16 +22,16 @@ func main() {
 	// HandleFunc receives handler func(w http.ResponseWriter, req *http.request)
 	// in this case helthCheck meet the requirment as argument
 
-	headerOk := handlers.AllowedHeaders([]string{"Authorization"})
+	headersOk := handlers.AllowedHeaders([]string{"Authorization"})
 	// allow Authorization header
 	originsOk := handlers.AllowedOrigins([]string{"*"})
 	// allow any domain
-	methodsOk := handlers.AllowedMethods([]string{"GET","POST","OPTIONS"})
+	methodsOk := handlers.AllowedMethods([]string{"GET", "POST", "OPTIONS"})
 	// allow GET, POST and OPTION methods
 
 	fmt.Println("Running server!") //write onto the terminal
 	//handlers.CORS applies CORS to router
-	log.Fatal(http.ListenAndServe(":3000", handlers.CORS(originsOk, headersOk, methodsOk)(router))
+	log.Fatal(http.ListenAndServe(":3000", handlers.CORS(originsOk, headersOk, methodsOk)(router)))
 	//http.ListenAndServe(addr string, handler Handler) error
 	/*'
 	listens on TCP network address "addr" and call Serve with
